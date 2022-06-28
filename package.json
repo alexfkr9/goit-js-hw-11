@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "homepage": "https://alexfkr9.github.io/goit-js-hw-11/index.html",
-
   "scripts": {
     "start": "parcel src/*.html",
     "build": "parcel build src/*.html --public-url /goit-js-hw-11/"
@@ -11,12 +10,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexfkr9/goit-js-hw-11.git"
-
   },
   "keywords": [],
   "author": "Alex Fkr",
-  "license": "ISC",  
+  "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "modern-normalize": "^1.1.0"
   },
   "devDependencies": {
