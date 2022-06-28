@@ -1,5 +1,6 @@
 import './css/styles.css';
 // import NewsApiService from './NewsApiService.js'
+const axios = require('axios');
 
 class NewsApiService {
   constructor() {
@@ -7,7 +8,7 @@ class NewsApiService {
       this.page = 1;
   }
 
-  fetchArticles() {
+  fetchArticles = async () =>  {
       // const options = {
       //     headers: {
       //         Autorization: '',                
@@ -16,12 +17,9 @@ class NewsApiService {
       const url = `https://pixabay.com/api/?key=28304018-265b00fbf5f9e6bf82ef29498&q=${this.searchQuery}&
                 image_type=photo&orientation=horizontal&safesearch=false&per_page=40`;    
 
-      return fetch(url)
-          .then(r => r.json())
-          .then(data => {
-              this.incrementPage();
-              return data;
-          });
+      const fetchGallery = await fetch(url);     
+      this.incrementPage();
+      return fetchGallery.json();          
   }
 
   incrementPage() {
