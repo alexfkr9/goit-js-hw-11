@@ -14,7 +14,7 @@ export default class NewsApiService {
           "X-Custom-Header": "custom value",
         });
         const url = `https://pixabay.com/api/?key=28304018-265b00fbf5f9e6bf82ef29498&q=${this.searchQuery}&
-                  image_type=photo&orientation=horizontal&safesearch=false&page=${this.page}&per_page=3
+                  image_type=photo&orientation=horizontal&safesearch=false&page=${this.page}&per_page=20
                   `;
         
         const fetchGallery = await axios.get(url, headers);
@@ -30,7 +30,7 @@ export default class NewsApiService {
     }
   
     incrementCard() {
-        this.currentCard += 140;
+        this.currentCard += 40;
     }
 
     resetPageAndCard() {
