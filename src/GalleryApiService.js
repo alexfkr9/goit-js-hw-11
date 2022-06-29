@@ -4,6 +4,7 @@ export default class NewsApiService {
     constructor() {
         this.searchQuery = '';
         this.page = 1;
+        this.currentCard = 1;
     } 
   
     fetchArticles = async () =>  {
@@ -13,11 +14,14 @@ export default class NewsApiService {
           "X-Custom-Header": "custom value",
         });
         const url = `https://pixabay.com/api/?key=28304018-265b00fbf5f9e6bf82ef29498&q=${this.searchQuery}&
-                  image_type=photo&orientation=horizontal&safesearch=false&per_page=40`;
+                  image_type=photo&orientation=horizontal&safesearch=false&page=${this.page}&per_page=3
+                  `;
         
-        const fetchGallery = await axios.get(url);
-        console.log(fetchGallery.data);
+        const fetchGallery = await axios.get(url, headers);
+        
         this.incrementPage();
+        this.incrementCard();
+
         return fetchGallery.data;          
     }
   
@@ -25,9 +29,18 @@ export default class NewsApiService {
         this.page += 1
     }
   
-    resetPage() {
-        this.page = 1;
+    incrementCard() {
+        this.currentCard += 140;
     }
+
+    resetPageAndCard() {
+        this.page = 1;
+        this.currentCard = 1;        
+    }    
+
+    getCurrentCard() {
+        return this.currentCard;
+    }    
   
     get query() {
         return this.searchQuery;
