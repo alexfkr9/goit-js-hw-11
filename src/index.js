@@ -1,43 +1,15 @@
 import './css/styles.css';
-// import NewsApiService from './NewsApiService.js'
-const axios = require('axios');
+import NewsApiService from './NewsApiService.js';
 
-class NewsApiService {
-  constructor() {
-      this.searchQuery = '';
-      this.page = 1;
-  }
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-  fetchArticles = async () =>  {
-      // const options = {
-      //     headers: {
-      //         Autorization: '',                
-      //     },
-      // };
-      const url = `https://pixabay.com/api/?key=28304018-265b00fbf5f9e6bf82ef29498&q=${this.searchQuery}&
-                image_type=photo&orientation=horizontal&safesearch=false&per_page=40`;    
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
-      const fetchGallery = await fetch(url);     
-      this.incrementPage();
-      return fetchGallery.json();          
-  }
-
-  incrementPage() {
-      this.page += 1
-  }
-
-  resetPage() {
-      this.page = 1;
-  }
-
-  get query() {
-      return this.searchQuery;
-  }
-
-  set query(newQuery) {
-      this.searchQuery = newQuery;
-  }
-}
+var lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
 
 const newsApiService = new NewsApiService();
@@ -46,7 +18,7 @@ const newsApiService = new NewsApiService();
 const searchForm = document.querySelector("#search-form");
 const gallery = document.querySelector(".gallery");
 
-// searchForm.addEventListener('submit', onSearch)
+searchForm.addEventListener('submit', onSearch)
 
 onSearch();
 function onSearch(e) {
@@ -70,10 +42,14 @@ function onSearch(e) {
 function renderUserList(data) {
     console.log(data);
   const cards=data.hits;
+  if (cards.length === 0) {
+    Notify.failure('Sorry, there are no images matching your search query. Please try again.');    
+    return;
+  }  
   const markup = cards
     .map((card) => {
       return `
-        <div class="photo-card">
+      <a href=${card.webformatURL}>        
             <img src=${card.webformatURL} alt=${card.pageURL} loading="lazy" />
             <div class="info">
                 <p class="info-item">
@@ -92,10 +68,11 @@ function renderUserList(data) {
                   <b>Downloads</b>
                   <span>${card.downloads}</span>
                 </p>
-            </div>
-        </div>
+            </div>        
+      </a>  
       `;
     })
     .join("");
     gallery.innerHTML = markup;
 }
+
