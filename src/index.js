@@ -30,8 +30,7 @@ function onSearch(e) {
 
 function clearMarkup() {
   gallery.innerHTML = '';
-  galleryApiService.resetPageAndCard();
-  // lightbox.refresh()
+  galleryApiService.resetPageAndCard();  
 }
 
 
